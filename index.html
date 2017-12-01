@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>generators</title>
+  </head>
+  <body>
+
+    <script type="text/javascript">
+
+    function* makeGen(n) {
+      product = n;
+      yield n;
+      while(n > 1) {
+        n = yield n - 1;
+        product *= n;
+      }
+      return product;
+    }
+
+    const gen = makeGen(5);
+
+    let result = gen.next(); // { value: 3, done: false }
+
+    while (!result.done) {
+      console.log(result.value)
+      result = gen.next(result.value)
+    }
+    console.log('done: ', result.value);
+
+    </script>
+  </body>
+</html>
