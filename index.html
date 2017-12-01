@@ -8,26 +8,48 @@
 
     <script type="text/javascript">
 
-    function* makeGen(n) {
-      product = n;
-      yield n;
-      while(n > 1) {
-        n = yield n - 1;
-        product *= n;
+      // factorial
+      function* fact(n) {
+        product = n;
+        yield n;
+        while(n > 1) {
+          n = yield n - 1;
+          product *= n;
+        }
+        return product;
       }
-      return product;
-    }
 
-    const gen = makeGen(5);
+      const gen = fact(5);
 
-    let result = gen.next(); // { value: 3, done: false }
+      let result = gen.next();
 
-    while (!result.done) {
-      console.log(result.value)
-      result = gen.next(result.value)
-    }
-    console.log('done: ', result.value);
+      while (!result.done) {
+        console.log('fact: ', result.value)
+        result = gen.next(result.value)
+      }
+      console.log('fact done: ', result.value);
 
+      // fibonacci
+      function* fib() {
+        let fn1 = 0;
+        let fn2 = 1;
+
+        while (true) {
+          let current = fn1 + fn2;
+          fn1 = fn2;
+          fn2 = current;
+          yield current;
+        }
+      }
+
+      const fibGen = fib();
+
+      console.log(fibGen.next());
+      console.log(fibGen.next());
+      console.log(fibGen.next());
+      console.log(fibGen.next());
+      console.log(fibGen.next());
+      console.log(fibGen.next());
     </script>
   </body>
 </html>
